@@ -7,14 +7,24 @@
   - name: update repository index
     yum:
       update_cache: yes
-
+    when: ansible_distribution in ["RedHat", "CentOS"] and ansible_distribution_version == "8.6"
 
   - name: install apache2 package
     yum:
       name: httpd
       state: latest
-  
+    when: ansible_distribution == "RedHat"
+
   - name: install php support for apache
     yum:
       name: php
       state: latest
+    when: ansible_distribution == "RedHat"
+
+  - name: Ubuntu apache2
+    apt:
+     name: apache2
+     state: latest
+    when: ansible_distribution == "Ubuntu"
+
+
